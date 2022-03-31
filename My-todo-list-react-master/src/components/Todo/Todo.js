@@ -40,16 +40,17 @@ const Todo = () => {
 
     // delate items
     function delateItem(event,id){
-        fetch(`/http://localhost:5000/${id}`,{
+        fetch(`http://localhost:5000/delate/${id}`,{
             method: 'DELETE',
         })
-        .then(res => res.json())
+        .then(res => res.json)
         .then(result => {
             if(result){
-                event.target.parentNode.style.display = 'none'
+             event.target.parentNode.parentNode.parentNode.style.display = 'none'
           }
         })
     }
+
 
 
     return (

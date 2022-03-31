@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500&display=swap');
+.main{
+    background: rgb(0, 0, 0);
+    min-height: 100vh;
+}
+.container{
+    padding-top: 10rem;
+}
+img{
+    width: 10%;
+    display: block;
+    margin: auto;
+    animation: App-logo-spin infinite 20s linear;
+}
+@keyframes App-logo-spin {
+    from {
+      transform: rotate(0deg);
+    }
+    to {
+      transform: rotate(360deg);
+    }
+  }
+input{
+    width: 19%;
+    height: 45px;
+    padding: 0 22px;
+    font-size: 16px;
+    margin: 0;
+    margin-top: 1rem;
+    outline: none;
+    border: none;
+    font-family: 'Poppins', sans-serif;
+}
+.addButton{
+    background: #fff;
+    color: #000;
+    font-size: 18px;
+    padding: 12px 21px;
+    border: none;
+}
+
+.eachItem{
+  background: #1b00ff;
+    width: 400px;
+    margin: auto;
+    margin-top: 2rem;
+    padding: 0 25px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    transition:  background-color .3s ease-in-out;
+}
+.eachItem h3 {
+  margin-right: auto;
+  font-size: 20px;
+  font-family: 'Poppins', sans-serif;
+}
+.eachItem
+.delate,
+.edit {
+  color: #ffff;
+  font-size: 18px;
+}
+
+.delate{
+  margin-left: 15px;
+}
+
+.eachItem:hover{
+  background: #fff;
+  color: #000;
+}
+.eachItem:hover .delate{
+  color: red;
+}
+.eachItem:hover .edit{
+  color: rgb(63, 149, 63);
+}
+

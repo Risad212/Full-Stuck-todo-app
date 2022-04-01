@@ -10,10 +10,37 @@ import './Todo.css'
 const Todo = () => {
     const [inputData, setInputData] = useState('')
     const [items, setItems] = useState([])
+    const [toggleSubmit, setToggleSubmit] = useState(true)
+    const [isEditItem , setIsEditItem] = useState(null)
+
     // add items button
     const addItems = () =>{
         if(!inputData){
          // return nothing if input will be empty
+        }
+        else if(inputData && !toggleSubmit){
+             setItems(
+                items.map((elem) =>{
+                    if(elem._id === isEditItem){
+                      return {elem, inputData:inputData}
+                    }
+                    return elem
+                })
+             )
+             setToggleSubmit(true)
+             setInputData('')
+             setIsEditItem('')
+
+             // Call api for update
+             fetch(`http://localhost:5000/update/${isEditItem}`, {
+                method: 'PATCH',
+                body: JSON.stringify({inputData}),
+                headers: {'Content-Type': 'application/json'},
+             })
+             .then(res => res.json())
+             .then(result => {
+                 console.log(result)
+            })
         }
         else{
             passData() 
@@ -52,6 +79,16 @@ const Todo = () => {
     }
 
 
+    // Edit Item
+    function EditItem(editId){
+         const newEditId = items.find((elem) =>{
+              return elem._id === editId
+         })
+        setInputData(newEditId.inputData)
+        setToggleSubmit(false)
+        setIsEditItem(editId)
+    }
+
 
     return (
         <>
@@ -59,7 +96,8 @@ const Todo = () => {
             <div className="container">
                <img src={Logo} alt="" />
                    <input type="text" placeholder='add Items' value={inputData} onChange={(e) => setInputData(e.target.value)}/>
-                   <button className='addButton'><FontAwesomeIcon icon={faPlus} onClick={addItems}/></button>
+                   {toggleSubmit ? <button className='addButton'><FontAwesomeIcon icon={faPlus} onClick={addItems}/></button>:
+                   <button className='addButton'><FontAwesomeIcon icon={faEdit} onClick={addItems}/></button>}
                  {/*----- show item ----- */}
                  <div className="showItem">
                    {
@@ -70,7 +108,7 @@ const Todo = () => {
                              <div className='eachItem'>
                                 <h3>{inputData}</h3>
                                  <div>
-                                     <FontAwesomeIcon icon={faEdit} className="edit"/>
+                                     <FontAwesomeIcon icon={faEdit} className="edit" onClick={() => EditItem(_id)}/>
                                      <FontAwesomeIcon icon={faTrashAlt} className="delate" onClick={(event) => delateItem(event, _id)}/>
                                       <span></span>
                                  </div>

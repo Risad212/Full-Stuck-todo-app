@@ -21,7 +21,7 @@ app.get('/', (req, res) => {
 
 // mongo db database
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.uppua.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
+const uri = `mongodb+srv://risadtodo:risad123$@cluster0.uppua.mongodb.net/risadstorge?retryWrites=true&w=majority`;
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true, serverApi: ServerApiVersion.v1 });
 client.connect(err => {
   const collection = client.db("risadstorge").collection("items");
@@ -46,7 +46,7 @@ client.connect(err => {
      })
   })
 
-   //===================================
+  //===================================
  // delate method
 app.delete('/delate/:id', (req, res) =>{
   collection.deleteOne({_id: ObjectId(req.params.id)})
@@ -55,6 +55,19 @@ app.delete('/delate/:id', (req, res) =>{
   })
 })
 
+//===================================
+ // Edit method
+ app.patch('/update/:id',(req, res) =>{
+  collection.updateOne({_id: ObjectId(req.params.id)},
+    {
+     $set: {inputData: req.body.inputData}
+    }
+  )
+  .then(result => {
+     res.send(result.modifiedCount > 0)
+  })
+
+})
 
 
 // mongo close here
